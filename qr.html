@@ -25,7 +25,6 @@
 
   <script>
     function onScanSuccess(decodedText, decodedResult) {
-      // Stop scanning once we get the QR code
       html5QrcodeScanner.clear().then(_ => {
         document.getElementById("message").innerText = "Welcome! 🎉 QR Code Scanned: " + decodedText;
       }).catch(error => {
