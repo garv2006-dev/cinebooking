@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="INDEX.CSS" />
   </head>
   <body>
-    <!-- ===== Header ===== -->
     <header>
       <nav>
         <div class="logo">
@@ -34,7 +33,9 @@
           <li><a href="contect.html">Contact</a></li>
         </ul>
         <div class="auth-buttons">
-          <button class="btn-login" onclick="window.location.href='login.html'">Login</button>
+          <button class="btn-login" onclick="window.location.href='login.html'">
+            Login
+          </button>
           <button class="btn-signup">Sign Up</button>
         </div>
         <div class="hamburger" onclick="toggleMenu()">
@@ -43,19 +44,85 @@
       </nav>
     </header>
 
-    <!-- ===== Movie Cards Loaded from LocalStorage ===== -->
     <div class="card-container">
       <div class="container">
         <div class="row justify-content-center">
           <div
             id="movieDisplay"
             class="card-container d-flex flex-wrap justify-content-center"
-          ></div>
+          >
+            <div class="card" style="width: 18rem">
+              <img
+                src="./img/PUSHPA2.jpg"
+                class="card-img-top"
+                alt="PUSHPA-2"
+              />
+              <div class="card-body">
+                <h5 class="card-title">PUSHPA-2</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem">
+              <img src="./img/animal.png" class="card-img-top" alt="ANIMAL" />
+              <div class="card-body">
+                <h5 class="card-title">ANIMAL</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem">
+              <img src="./img/LEO.webp" class="card-img-top" alt="LEO" />
+              <div class="card-body">
+                <h5 class="card-title">LEO</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem">
+              <img
+                src="./img/hasin dill ruba.jpg"
+                class="card-img-top"
+                alt="HASIN DULLRUBA"
+              />
+              <div class="card-body">
+                <h5 class="card-title">HASIN DULLRUBA</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem">
+              <img src="./img/garv.jpg" class="card-img-top" alt="RAJKUMAR" />
+              <div class="card-body">
+                <h5 class="card-title">RAJKUMAR</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem">
+              <img src="./img/salar.jpg" class="card-img-top" alt="SALAR" />
+              <div class="card-body">
+                <h5 class="card-title">SALAR</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem">
+              <img
+                src="./img/family star.jpg"
+                class="card-img-top"
+                alt="FAMILY STAR"
+              />
+              <div class="card-body">
+                <h5 class="card-title">FAMILY STAR</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem">
+              <img src="./img/Amaran.jpg" class="card-img-top" alt="AMARAN" />
+              <div class="card-body">
+                <h5 class="card-title">AMARAN</h5>
+                <a href="location.html" class="btn btn-primary">BOOK</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- ===== Footer ===== -->
     <footer class="cinema-footer">
       <div class="footer-container">
         <div class="footer-logo">
@@ -133,21 +200,33 @@
         </div>
       </div>
     </footer>
-
-    <!-- ===== Scripts ===== -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-
     <script>
       // Mobile Menu Toggle
-      function toggleMenu() {
-        document.querySelector(".nav-links").classList.toggle("active");
-        document.querySelector(".auth-buttons").classList.toggle("active");
-      }
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+        const authButtons = document.querySelector(".auth-buttons");
 
+        hamburger.addEventListener("click", function () {
+          navLinks.classList.toggle("active");
+          authButtons.classList.toggle("active");
+        });
+        movieList.appendChild(card);
+
+        // Reset fields
+        document.getElementById("movieName").value = "";
+        document.getElementById("moviePrice").value = "";
+        document.getElementById("movieImage").value = "";
+        preview.style.display = "none";
+        preview.src = "";
+      });
+    </script>
+    <script>
       // Load movies from localStorage and display
       function loadMovies() {
         const movieDisplay = document.getElementById("movieDisplay");
@@ -160,18 +239,20 @@
           card.className = "card m-2";
           card.style.width = "18rem";
           card.innerHTML = `
-            <img src="${movie.image}" class="card-img-top" alt="${movie.name}" />
-            <div class="card-body">
-              <h5 class="card-title">${movie.name}</h5>
-              <p class="card-text">Price: ₹${movie.price}</p>
-              <a href="location.html" class="btn btn-primary">BOOK</a>
-            </div>
-          `;
+        <img src="${movie.image}" class="card-img-top" alt="${movie.name}" />
+        <div class="card-body">
+          <h5 class="card-title">${movie.name}</h5>
+          <p class="card-text">Price: ₹${movie.price}</p>
+          <a href="location.html" class="btn btn-primary">BOOK</a>
+        </div>
+      `;
           movieDisplay.appendChild(card);
         });
       }
 
+      // Call loadMovies when page loads
       window.addEventListener("DOMContentLoaded", loadMovies);
     </script>
   </body>
 </html>
+

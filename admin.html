@@ -1,157 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - CineBook</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f7fa;
-      margin: 0;
-      padding: 20px;
-    }
-    h1, h2 {
-      text-align: center;
-      color: #1d4ed8;
-    }
-    .form-section, .movie-section {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      margin-bottom: 40px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    input, textarea, button {
-      width: 100%;
-      margin-bottom: 12px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      background-color: #2563eb;
-      color: white;
-      font-weight: bold;
-      transition: 0.3s ease;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #1d4ed8;
-    }
-    .preview-img {
-      max-width: 100%;
-      display: none;
-      margin: 10px 0;
-      border-radius: 8px;
-    }
-    .card-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-    .product, .movie-card {
-      background: white;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    .product img, .movie-card img {
-      max-width: 100px;
-      border-radius: 8px;
-    }
-    .actions button {
-      margin-top: 10px;
-      width: auto;
-      display: inline-block;
-    }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - CineBook</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f4f7fa;
+        margin: 0;
+        padding: 20px;
+      }
+      h1,
+      h2 {
+        text-align: center;
+        color: #1d4ed8;
+      }
+      .form-section,
+      .movie-section {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 40px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      input,
+      textarea,
+      button {
+        width: 100%;
+        margin-bottom: 12px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      button {
+        background-color: #2563eb;
+        color: white;
+        font-weight: bold;
+        transition: 0.3s ease;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #1d4ed8;
+      }
+      .preview-img {
+        max-width: 100%;
+        display: none;
+        margin: 10px 0;
+        border-radius: 8px;
+      }
+      .card-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 800px;
+        margin: auto;
+      }
+      .product,
+      .movie-card {
+        background: white;
+        padding: 16px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      }
+      .product img,
+      .movie-card img {
+        max-width: 100px;
+        border-radius: 8px;
+      }
+      .actions button {
+        margin-top: 10px;
+        width: auto;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Admin Panel - CineBook</h1>
 
-<h1>Admin Panel - CineBook</h1>
+    <!-- Product Form -->
 
-<!-- Product Form -->
+    <!-- Movie Form -->
+    <div class="form-section movie-section">
+      <h2>Add Movie</h2>
+      <input type="file" id="movieImage" accept="image/*" />
+      <img id="preview" class="preview-img" />
+      <input type="text" id="movieName" placeholder="Movie Name" />
+      <input type="number" id="moviePrice" placeholder="Ticket Price" />
+      <button onclick="addMovie()">Add Movie</button>
+      <!-- Export Movies -->
+      <div class="form-section">
+        <h2>Export Movies</h2>
+        <button onclick="exportMovies()">Download Movie JSON</button>
+      </div>
+      <!-- Import Movies -->
+      <div class="form-section">
+        <h2>Import Movies</h2>
+        <input type="file" id="importFile" accept=".json" />
+        <button onclick="importMovies()">Import Movie JSON</button>
+      </div>
+    </div>
 
-<!-- Movie Form -->
-<div class="form-section movie-section">
-  <h2>Add Movie</h2>
-  <input type="file" id="movieImage" accept="image/*">
-  <img id="preview" class="preview-img" />
-  <input type="text" id="movieName" placeholder="Movie Name">
-  <input type="number" id="moviePrice" placeholder="Ticket Price">
-  <button onclick="addMovie()">Add Movie</button>
-</div>
+    <!-- Display Area -->
+    <h2>Manage Products</h2>
+    <div id="productList" class="card-grid"></div>
 
-<!-- Display Area -->
-<h2>Manage Products</h2>
-<div id="productList" class="card-grid"></div>
+    <h2>Movie List</h2>
+    <div id="movieList" class="card-grid"></div>
 
-<h2>Movie List</h2>
-<div id="movieList" class="card-grid"></div>
+    <script>
+      const preview = document.getElementById("preview");
+      const movieImage = document.getElementById("movieImage");
 
-<script>
-  const preview = document.getElementById("preview");
-  const movieImage = document.getElementById("movieImage");
+      let updateIndex = null;
 
-  let updateIndex = null;
+      movieImage.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
 
-  movieImage.addEventListener("change", function () {
-    const file = this.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        preview.src = e.target.result;
-        preview.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+      function addMovie() {
+        const name = document.getElementById("movieName").value.trim();
+        const price = document.getElementById("moviePrice").value.trim();
+        const image = preview.src;
 
-  function addMovie() {
-    const name = document.getElementById("movieName").value.trim();
-    const price = document.getElementById("moviePrice").value.trim();
-    const image = preview.src;
+        if (!name || !price || !image) {
+          alert("Please fill all movie fields and upload image.");
+          return;
+        }
 
-    if (!name || !price || !image) {
-      alert("Please fill all movie fields and upload image.");
-      return;
-    }
+        let movies = JSON.parse(localStorage.getItem("movies")) || [];
 
-    let movies = JSON.parse(localStorage.getItem("movies")) || [];
+        const movie = { name, price, image };
 
-    const movie = { name, price, image };
+        if (updateIndex !== null) {
+          // Update mode
+          movies[updateIndex] = movie;
+          updateIndex = null;
+        } else {
+          // Add mode
+          movies.push(movie);
+        }
 
-    if (updateIndex !== null) {
-      // Update mode
-      movies[updateIndex] = movie;
-      updateIndex = null;
-    } else {
-      // Add mode
-      movies.push(movie);
-    }
+        localStorage.setItem("movies", JSON.stringify(movies));
+        renderMovies();
+        clearMovieForm();
+      }
 
-    localStorage.setItem("movies", JSON.stringify(movies));
-    renderMovies();
-    clearMovieForm();
-  }
+      function renderMovies() {
+        const list = document.getElementById("movieList");
+        const movies = JSON.parse(localStorage.getItem("movies")) || [];
+        list.innerHTML = "";
 
-  function renderMovies() {
-    const list = document.getElementById("movieList");
-    const movies = JSON.parse(localStorage.getItem("movies")) || [];
-    list.innerHTML = '';
-
-    movies.forEach((movie, index) => {
-      const div = document.createElement('div');
-      div.className = 'movie-card d-flex align-items-center gap-3';
-      div.innerHTML = `
+        movies.forEach((movie, index) => {
+          const div = document.createElement("div");
+          div.className = "movie-card d-flex align-items-center gap-3";
+          div.innerHTML = `
         <img src="${movie.image}" alt="${movie.name}" />
         <div class="movie-details">
           <h4>${movie.name}</h4>
@@ -162,59 +183,61 @@
           </div>
         </div>
       `;
-      list.appendChild(div);
-    });
-  }
+          list.appendChild(div);
+        });
+      }
 
-  function deleteMovie(index) {
-    let movies = JSON.parse(localStorage.getItem("movies")) || [];
-    movies.splice(index, 1);
-    localStorage.setItem("movies", JSON.stringify(movies));
-    renderMovies();
-  }
+      function deleteMovie(index) {
+        let movies = JSON.parse(localStorage.getItem("movies")) || [];
+        movies.splice(index, 1);
+        localStorage.setItem("movies", JSON.stringify(movies));
+        renderMovies();
+      }
 
-  function editMovie(index) {
-    let movies = JSON.parse(localStorage.getItem("movies")) || [];
-    const movie = movies[index];
-    document.getElementById("movieName").value = movie.name;
-    document.getElementById("moviePrice").value = movie.price;
-    preview.src = movie.image;
-    preview.style.display = "block";
-    updateIndex = index;
-  }
+      function editMovie(index) {
+        let movies = JSON.parse(localStorage.getItem("movies")) || [];
+        const movie = movies[index];
+        document.getElementById("movieName").value = movie.name;
+        document.getElementById("moviePrice").value = movie.price;
+        preview.src = movie.image;
+        preview.style.display = "block";
+        updateIndex = index;
+      }
 
-  function clearMovieForm() {
-    document.getElementById("movieName").value = "";
-    document.getElementById("moviePrice").value = "";
-    document.getElementById("movieImage").value = "";
-    preview.src = "";
-    preview.style.display = "none";
-  }
+      function clearMovieForm() {
+        document.getElementById("movieName").value = "";
+        document.getElementById("moviePrice").value = "";
+        document.getElementById("movieImage").value = "";
+        preview.src = "";
+        preview.style.display = "none";
+      }
 
-  // Product logic unchanged
-  document.getElementById("productForm")?.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const product = {
-      name: document.getElementById("productName").value,
-      price: document.getElementById("productPrice").value,
-      description: document.getElementById("productDescription").value,
-      image: document.getElementById("productImage").value,
-    };
-    let products = JSON.parse(localStorage.getItem("products")) || [];
-    products.push(product);
-    localStorage.setItem("products", JSON.stringify(products));
-    renderProducts();
-    e.target.reset();
-  });
+      // Product logic unchanged
+      document
+        .getElementById("productForm")
+        ?.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const product = {
+            name: document.getElementById("productName").value,
+            price: document.getElementById("productPrice").value,
+            description: document.getElementById("productDescription").value,
+            image: document.getElementById("productImage").value,
+          };
+          let products = JSON.parse(localStorage.getItem("products")) || [];
+          products.push(product);
+          localStorage.setItem("products", JSON.stringify(products));
+          renderProducts();
+          e.target.reset();
+        });
 
-  function renderProducts() {
-    const list = document.getElementById("productList");
-    const products = JSON.parse(localStorage.getItem("products")) || [];
-    list.innerHTML = '';
-    products.forEach((product, index) => {
-      const div = document.createElement('div');
-      div.className = 'product';
-      div.innerHTML = `
+      function renderProducts() {
+        const list = document.getElementById("productList");
+        const products = JSON.parse(localStorage.getItem("products")) || [];
+        list.innerHTML = "";
+        products.forEach((product, index) => {
+          const div = document.createElement("div");
+          div.className = "product";
+          div.innerHTML = `
         <h4>${product.name}</h4>
         <img src="${product.image}" alt="${product.name}" />
         <p><strong>Price:</strong> ₹${product.price}</p>
@@ -223,22 +246,71 @@
           <button onclick="deleteProduct(${index})">Delete</button>
         </div>
       `;
-      list.appendChild(div);
-    });
-  }
+          list.appendChild(div);
+        });
+      }
 
-  function deleteProduct(index) {
-    let products = JSON.parse(localStorage.getItem('products')) || [];
-    products.splice(index, 1);
-    localStorage.setItem('products', JSON.stringify(products));
-    renderProducts();
-  }
+      function deleteProduct(index) {
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        products.splice(index, 1);
+        localStorage.setItem("products", JSON.stringify(products));
+        renderProducts();
+      }
 
-  // Initial load
-  renderProducts();
-  renderMovies();
-</script>
+      // Initial load
+      renderProducts();
+      renderMovies();
 
+      function exportMovies() {
+        const movies = JSON.parse(localStorage.getItem("movies")) || [];
 
-</body>
+        // Convert JS object to JSON string
+        const movieJSON = JSON.stringify(movies, null, 2);
+
+        // Create a Blob (file-like object)
+        const blob = new Blob([movieJSON], { type: "application/json" });
+
+        // Generate a temporary download URL
+        const url = URL.createObjectURL(blob);
+
+        // Create a download link dynamically
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "movies.json"; // This is the file name
+        document.body.appendChild(a);
+        a.click(); // Trigger download
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url); // Clean up
+      }
+
+      function importMovies() {
+        const fileInput = document.getElementById("importFile");
+        const file = fileInput.files[0];
+
+        if (!file) {
+          alert("Please choose a JSON file.");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const importedMovies = JSON.parse(e.target.result);
+
+            if (Array.isArray(importedMovies)) {
+              localStorage.setItem("movies", JSON.stringify(importedMovies));
+              renderMovies(); // Refresh movie list
+              alert("Movies imported successfully!");
+            } else {
+              alert("Invalid format: Expected an array.");
+            }
+          } catch (err) {
+            alert("Error reading JSON file: " + err.message);
+          }
+        };
+
+        reader.readAsText(file);
+      }
+    </script>
+  </body>
 </html>
