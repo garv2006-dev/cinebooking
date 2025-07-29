@@ -125,7 +125,7 @@
         <img src="./img/loce.png" alt="Lock Icon" class="icon">
         <input type="password" id="n2" placeholder="Password" required>
       </div>
-  
+      <!-- <a href="register.php">Create New Account</a> -->
       <div class="form-row">
         <input type="submit" value="Login" class="submit-btn">
       </div>
@@ -143,10 +143,12 @@ function handleLogin(e) {
 
     if (username === adminUser) {
         // Redirect to admin panel
-        window.location.href = "admin.html";
+        // window.location.href='http://localhost/new/index.php';
+                window.location.href="admin.html";
+
     } else {
-        
-        window.location.href = "index.html";
+        // alert("not valid create new account plz");
+        window.location.href="indexss.html";
     }
 }
 </script>
